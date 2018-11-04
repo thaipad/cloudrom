@@ -1,0 +1,61 @@
+<configuration>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="result" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%magenta(%msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="output" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%blue(%msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="sql" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%green(%msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="result" level="INFO" additivity="false">
+        <appender-ref ref="result"/>
+    </logger>
+    <logger name="output" level="INFO" additivity="false">
+        <appender-ref ref="output"/>
+    </logger>
+
+    <logger name="jdbc.resultsqltable" level="debug">
+        <appender-ref ref="sql"/>
+    </logger>
+    <logger name="jdbc.sqlonly" level="info">
+        <appender-ref ref="sql"/>
+    </logger>
+    <logger name="jdbc.resultset" level="error">
+        <appender-ref ref="sql"/>
+    </logger>
+    <logger name="jdbc.audit" level="error">
+        <appender-ref ref="sql"/>
+    </logger>
+
+    <logger name="pro.thaipad.cloudrom" level="debug"/>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+    </root>
+
+</configuration>
