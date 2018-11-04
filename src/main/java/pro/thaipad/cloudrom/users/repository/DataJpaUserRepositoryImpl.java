@@ -13,6 +13,7 @@ import pro.thaipad.cloudrom.users.entity.User;
 import java.util.List;
 import java.util.Optional;
 
+// methods throw exception NotFoundException if not found element
 @Repository
 public class DataJpaUserRepositoryImpl implements UserRepository {
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");

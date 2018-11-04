@@ -15,6 +15,8 @@ import pro.thaipad.cloudrom.users.repository.CrudUserRepository;
 import java.util.List;
 import java.util.Optional;
 
+
+// methods throw exception NotFoundException if not found element
 @Repository
 public class DataJpaInstanceRepositoryImpl implements InstanceRepository {
 
@@ -28,10 +30,10 @@ public class DataJpaInstanceRepositoryImpl implements InstanceRepository {
     @Override
     public Instance save(Instance instance, int userId) {
         if (instance.isNew()) {
-            instance.setUser(userRepository.getOne(userId));
+            instance.setUser(userRepository.getOne(userId)); // get from database because use lazy initialization
         } else {
             User user = instanceRepository.getUserByInstanceId(instance.getId());
-            if (user == null || user.getId() != userId) {
+            if (user == null || user.getId() != userId) {  // modify only own instances
                 throw new NotFoundException();
             }
             instance.setUser(user);

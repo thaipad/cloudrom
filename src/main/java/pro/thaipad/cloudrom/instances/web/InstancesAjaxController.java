@@ -73,7 +73,9 @@ public class InstancesAjaxController extends AbstractInstancesController {
 
         StringJoiner joiner = new StringJoiner("<br>");
         StringBuilder builder = new StringBuilder();
-//        TODO: Have to implement max and min values of cpu, ram, hdd for current user
+
+        // Verify instance properties. Only description can be empty
+        //        TODO: Have to implement verifying properties on max and min values of cpu, ram, hdd for current user
 
         if (name == null || name.isEmpty()) {
             joiner.add(messageSource.getMessage("instance.note.empty_name", new String[]{locale.getDisplayName(locale)}, locale));
@@ -100,6 +102,7 @@ public class InstancesAjaxController extends AbstractInstancesController {
         } else {
             super.update(new Instance(id, name, description, cpu, ram, hdd, Os.valueOf(os), null));
         }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

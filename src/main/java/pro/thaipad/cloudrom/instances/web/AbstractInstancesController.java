@@ -10,13 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pro.thaipad.cloudrom.AuthorizedUser;
 import pro.thaipad.cloudrom.instances.entity.Instance;
 import pro.thaipad.cloudrom.instances.service.InstanceService;
-import pro.thaipad.cloudrom.users.entity.Role;
 import pro.thaipad.cloudrom.users.entity.User;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AbstractInstancesController {
 

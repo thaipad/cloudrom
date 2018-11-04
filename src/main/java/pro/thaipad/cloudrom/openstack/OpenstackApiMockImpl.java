@@ -4,16 +4,21 @@
 
 package pro.thaipad.cloudrom.openstack;
 
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pro.thaipad.cloudrom.common.exceptions.ErrorOpenstackOperationException;
 import pro.thaipad.cloudrom.instances.entity.Instance;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+
+// It's mock implementation of adapter for JAVA Openstack API
+// methods throw ErrorOpenstackOperationException if can't connect or API returns operations error
 
 @Repository
 public class OpenstackApiMockImpl implements OpenstackApi {
@@ -54,7 +59,7 @@ public class OpenstackApiMockImpl implements OpenstackApi {
     }
 
     @Override
-    public Instance createInstance(Instance instance) {
+    public Instance createInstance(Instance instance) throws ErrorOpenstackOperationException {
         int id = maxId.incrementAndGet();
         mockOsInstances.put(id, null);
         Instance instanceCopy = new Instance(instance);
@@ -64,12 +69,12 @@ public class OpenstackApiMockImpl implements OpenstackApi {
     }
 
     @Override
-    public boolean updateInstance(Instance instance) {
+    public boolean updateInstance(Instance instance) throws ErrorOpenstackOperationException {
         return mockOsInstances.containsKey(instance.getOsInstanceId());
     }
 
     @Override
-    public boolean deleteInstance(int osInstanceId) {
+    public boolean deleteInstance(int osInstanceId) throws ErrorOpenstackOperationException {
         if (mockOsInstances.containsKey(osInstanceId)) {
             mockOsInstances.remove(osInstanceId);
         }
@@ -77,26 +82,26 @@ public class OpenstackApiMockImpl implements OpenstackApi {
     }
 
     @Override
-    public LocalDateTime runInstance(int osInstanceId) {
+    public LocalDateTime runInstance(int osInstanceId) throws ErrorOpenstackOperationException {
         if (!mockOsInstances.containsKey(osInstanceId)) {
             return null;
         } else if (mockOsInstances.get(osInstanceId) == null) {
             mockOsInstances.put(osInstanceId, LocalDateTime.now());
-            prossesingEmulator(10);
+            prossesingEmulator(10); // really running of instance is a long time operation (from 10 sec to several minutes)
         }
         return mockOsInstances.get(osInstanceId);
     }
 
     @Override
-    public void stopInstance(int osInstanceId) {
+    public void stopInstance(int osInstanceId) throws ErrorOpenstackOperationException {
         if (mockOsInstances.containsKey(osInstanceId)) {
             mockOsInstances.put(osInstanceId, null);
-            prossesingEmulator(3);
+            prossesingEmulator(3); // really running of instance is a long time operation
         }
     }
 
     @Override
-    public LocalDateTime getRunningDateInstance(int osInstanceId) {
+    public LocalDateTime getRunningDateInstance(int osInstanceId) throws ErrorOpenstackOperationException {
         return mockOsInstances.getOrDefault(osInstanceId, null);
     }
 
@@ -107,4 +112,5 @@ public class OpenstackApiMockImpl implements OpenstackApi {
 
         }
     }
+
 }

@@ -95,13 +95,13 @@ public class Instance extends AbstractBaseEntity {
     @Override
     public String toString() {
         return "Instance{" +
-                "description='" + description + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", cpu=" + cpu +
                 ", ram=" + ram +
                 ", hdd=" + hdd +
                 ", os=" + os +
-                ", id=" + id +
-                ", name='" + name + '\'' +
                 '}';
     }
 }
