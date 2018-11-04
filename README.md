@@ -25,6 +25,7 @@
 - JSP/JSTL, JavaScript, JQuery, AJAX, HTML/CSS, Bootstrap;
 - JUnit; 
 - Lombok;
+- Maven;
 - IDEA.
 
 =============
